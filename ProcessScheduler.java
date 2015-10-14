@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class ProcessScheduler
 {
-	private LinkedList<PCB>theJobQ = new LinkedList<PCB>();
-	private LinkedList<PCB>theReadyQ = new LinkedList<PCB>();
-	private LinkedList<PCB>theWaitingQ = new LinkedList<PCB>();
+	private PSQueue theJobQ = new PSQueue();
+	private PSQueue theReadyQ = new PSQueue();
+	private PSQueue theWaitingQ = new PSQueue();
 	private int currPID;
 	private Random r = new Random();
 	
@@ -31,12 +31,13 @@ public class ProcessScheduler
 		this.currPID++;
 		
 		//add the new PCB to the Job Q
-		this.theJobQ.add(theNewPCB);
+		theNewPCB.setPriorityHigh();
+		this.theJobQ.addPCB(theNewPCB, false);
 		System.out.println("\t*** Add PCB to Job Q");
 		
 		//add the new PCB to the Ready Q
 		theNewPCB.setStateReady();
-		this.theReadyQ.add(theNewPCB);
+		this.theReadyQ.addPCB(theNewPCB, true);
 		
 		//******We need to wrap our Q's in a data structure
 		

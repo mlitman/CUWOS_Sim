@@ -10,6 +10,13 @@ class PCB_State
 	static int TERMINATED = 4;
 }
 
+class PCB_Priority
+{
+	static int LOW = 0;
+	static int NORMAL = 1;
+	static int HIGH = 2;
+}
+
 class Register
 {
 	private String name;
@@ -21,6 +28,7 @@ public class PCB
 	private int pid;
 	private int state;
 	private int timeSlice;
+	private int priority;
 	private PCB parent;
 	private LinkedList<PCB> children = new LinkedList<PCB>();
 	private LinkedList<File> openFiles = new LinkedList<File>();
@@ -33,6 +41,7 @@ public class PCB
 		this.pid = pid;
 		this.state = PCB_State.NEW;
 		this.timeSlice = 0;
+		this.priority = PCB_Priority.NORMAL;
 		this.parent = parent;
 		this.instructions = instructions;
 	}
@@ -41,7 +50,22 @@ public class PCB
 	{
 		return timeSlice;
 	}
-
+	
+	public void setPriorityHigh()
+	{
+		this.priority = PCB_Priority.HIGH;
+	}
+	
+	public void setPriorityNormal()
+	{
+		this.priority = PCB_Priority.NORMAL;
+	}
+	
+	public void setPriorityLow()
+	{
+		this.priority = PCB_Priority.LOW;
+	}
+	
 	public void setStateReady()
 	{
 		this.state = PCB_State.READY;
